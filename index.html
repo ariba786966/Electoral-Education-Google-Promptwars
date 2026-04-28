@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electoral Education Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFF0F5">
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="An interactive web application helping Gen-Z understand the electoral process in India safely and securely.">
+    <!-- CSP: allow scripts from self, images from self/blob, connect to gemini API -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://generativelanguage.googleapis.com;">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container card glass">
+            <img src="logo.png" alt="Election Logo" class="auth-logo">
+            <h1>Welcome Voter</h1>
+            <p>Sign in securely to continue.</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="aadhaar">Aadhaar Number (Mock)</label>
+                    <input type="text" id="aadhaar" pattern="\d{12}" placeholder="Enter 12-digit number" required title="Must be a 12 digit number">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" minlength="8" placeholder="Enter password (min 8 chars)" required>
+                </div>
+                <div class="input-group">
+                    <label for="apiKey">Gemini API Key (Required for Bot)</label>
+                    <input type="password" id="apiKey" placeholder="AIzaSy..." required>
+                </div>
+                <button type="submit" class="btn primary-btn">Secure Login</button>
+            </form>
+            <p class="security-note">🔒 We use mock authentication here for your privacy. Your data is not stored on any server.</p>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div id="app-screen" class="screen">
+        <header>
+            <div class="logo-area">
+                <img src="logo.png" alt="India Election Info" class="logo">
+                <h2>Elec-GenZ</h2>
+            </div>
+            <button id="logout-btn" class="btn secondary-btn small">Logout</button>
+        </header>
+
+        <main>
+            <section class="assistant-section">
+                <div class="avatar-container glass pulse">
+                    <img src="avatar.png" alt="Lok Sabha Assistant" class="avatar">
+                </div>
+                
+                <div class="chat-container glass">
+                    <div id="chat-history" class="chat-history">
+                        <div class="message assistant">
+                            Welcome! I'm your election assistant. Need the tea on how to vote? Ask me anything about the Indian electoral process.
+                        </div>
+                    </div>
+                    
+                    <div class="input-area">
+                        <input type="text" id="user-input" placeholder="Type your question here...">
+                        <button id="send-btn" class="btn primary-btn icon-btn">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <h3>The Electoral Process</h3>
+                <div class="timeline-container">
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 1</div>
+                        <div class="tl-content"><strong>Notification:</strong> ECI drops the schedule. Game on.</div>
+                    </div>
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 2</div>
+                        <div class="tl-content"><strong>Nomination:</strong> Candidates file their papers to run.</div>
+                    </div>
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 3</div>
+                        <div class="tl-content"><strong>Scrutiny & Withdrawal:</strong> Checking forms, last chance to drop out.</div>
+                    </div>
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 4</div>
+                        <div class="tl-content"><strong>Campaigning:</strong> Rallies, manifestos, the hype train.</div>
+                    </div>
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 5</div>
+                        <div class="tl-content"><strong>Polling Day:</strong> Go cast your vote! Need EPIC or valid ID.</div>
+                    </div>
+                    <div class="timeline-item glass">
+                        <div class="tl-date">Phase 6</div>
+                        <div class="tl-content"><strong>Counting:</strong> The results are out.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="safety-section glass">
+                <h3>Stay Safe, Be Responsible 🛡️</h3>
+                <ul class="safety-list">
+                    <li><strong>Fact Check:</strong> Don't believe everything on WhatsApp. Verify news with official ECI sources.</li>
+                    <li><strong>Spam Calls/Texts:</strong> Ignore unverified links asking for "voter registration fees" (it's free!).</li>
+                    <li><strong>Physical Safety:</strong> Be aware of your surroundings on polling day. Report suspicious activity or riots to local authorities.</li>
+                    <li><strong>Civic Duty:</strong> Do not accept cash, gifts, or liquor for your vote. It's illegal and bad vibes.</li>
+                    <li><strong>Data Security:</strong> Never share your Aadhaar OTP or Epic Card details with strangers online.</li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Floating Action Button for Voice/Text toggle -->
+        <div class="fab-container">
+            <button id="voice-toggle-btn" class="fab glass" title="Toggle Voice/Text Output">
+                <svg id="voice-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    console.log('SW registered!', reg);
+                }).catch(err => console.log('SW registration failed', err));
+            });
+        }
+    </script>
+</body>
+</html>
